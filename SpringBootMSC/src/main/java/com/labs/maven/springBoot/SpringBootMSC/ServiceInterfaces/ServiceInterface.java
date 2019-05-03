@@ -3,6 +3,7 @@ package com.labs.maven.springBoot.SpringBootMSC.ServiceInterfaces;
 import com.labs.maven.springBoot.SpringBootMSC.Model.Doctor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ServiceInterface<T> {

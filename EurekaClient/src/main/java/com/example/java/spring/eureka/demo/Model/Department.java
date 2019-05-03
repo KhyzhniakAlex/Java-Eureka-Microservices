@@ -1,7 +1,4 @@
-package com.labs.maven.springBoot.SpringBootMSC.Model;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+package com.example.java.spring.eureka.demo.Model;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,17 +16,13 @@ public class Department {
     @Column(name = "floor", nullable = false)
     private Integer floor;
 
-    @Column(name="presenceFlag", nullable = false)
-    private boolean presenceFlag = true;
-
     public Department(String name, Integer floor)
     {
         this.name = name;
         this.floor = floor;
     }
 
-    public Department()
-    {
+    public Department() {
 
     }
 
@@ -47,26 +40,28 @@ public class Department {
 
 
 
+    public int getId() {
+        return id;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public Integer getFloor() {
         return floor;
     }
+
     public void setFloor(Integer floor) {
         this.floor = floor;
-    }
-    public boolean getPresenceFlag() {
-        return presenceFlag;
-    }
-    public void setPresenceFlag(boolean flag) {
-        this.presenceFlag = flag;
     }
 
     @Override
@@ -78,3 +73,4 @@ public class Department {
                 floor.equals(dep.floor);
     }
 }
+

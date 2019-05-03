@@ -1,8 +1,9 @@
-package com.labs.maven.springBoot.SpringBootMSC.Model;
+package com.example.java.spring.eureka.demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="doctors")
@@ -21,9 +22,6 @@ public class Doctor {
     @Column(name = "salary", nullable = false)
     private Integer salary;
 
-    @Column(name="presenceFlag", nullable = false)
-    private boolean presenceFlag = true;
-
     public Doctor(String fname, String surname, Integer age, Integer salary)
     {
         this.fname = fname;
@@ -32,7 +30,8 @@ public class Doctor {
         this.salary = salary;
     }
 
-    public Doctor() {
+    public Doctor()
+    {
 
     }
 
@@ -52,38 +51,44 @@ public class Doctor {
 
 
 
+    public int getId() {
+        return id;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getFname() {
         return fname;
     }
+
     public void setFname(String fname) {
         this.fname = fname;
     }
+
     public String getSurname() {
         return surname;
     }
+
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
     public Integer getAge() {
         return age;
     }
+
     public void setAge(Integer age) {
         this.age = age;
     }
+
     public Integer getSalary() {
         return salary;
     }
+
     public void setSalary(Integer salary) {
         this.salary = salary;
-    }
-    public boolean getPresenceFlag() {
-        return presenceFlag;
-    }
-    public void setPresenceFlag(boolean flag) {
-        this.presenceFlag = flag;
     }
 
     @Override
@@ -97,3 +102,4 @@ public class Doctor {
                 salary.equals(doc.salary);
     }
 }
+
