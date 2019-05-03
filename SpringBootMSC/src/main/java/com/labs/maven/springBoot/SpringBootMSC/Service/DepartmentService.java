@@ -48,10 +48,11 @@ public class DepartmentService implements ServiceInterface<Department> {
     public List<Department> getAll() {
         List<Department> departments = (List<Department>)repository.findAll();
         for(Department dep : departments) {
-            if (!dep.getPresenceFlag())
+            if (!dep.getPresenceFlag()) {
+                //for (Doctor doc : dep.getDoctors())
+                //    dep.getDoctors().remove(doc);
                 departments.remove(dep);
-            for(Doctor doc : dep.getDoctors())
-                dep.getDoctors().remove(doc);
+            }
         }
         return departments;
     }
@@ -133,7 +134,7 @@ public class DepartmentService implements ServiceInterface<Department> {
                     throw new ThereIsNoSuchItemException();
                 } else {
                     department.setPresenceFlag(false);
-                    return department;
+                    return repository.save(department);
                 }
             });
         }

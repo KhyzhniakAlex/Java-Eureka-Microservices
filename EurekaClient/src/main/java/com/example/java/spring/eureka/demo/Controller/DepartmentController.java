@@ -11,43 +11,37 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/rest/department")
+//@RequestMapping("/rest/department")
 public class DepartmentController {
 
-    @Autowired
     private RestClient client;
 
-
-    /*public void setDepartmentController(RestClient client) {
+    @Autowired
+    public DepartmentController(RestClient client) {
         this.client = client;
-    }*/
+    }
 
-    //@GetMapping("rest/")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("rest/department")
     public List<Department> getAllDepartments() {
         return client.getAllDepartments();
     }
 
-    //@GetMapping("rest/{id}")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("rest/department/{id}")
     public Department getOneDepartment(@PathVariable Integer id) {
         return client.getOneDepartment(id);
     }
 
-    //@PostMapping("rest/")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("rest/department")
     public ResponseEntity<Object> createDepartment(@Valid @RequestBody Department department) {
         return client.createDepartment(department);
     }
 
-    //@PostMapping("rest/{id}")
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @PostMapping("rest/department/{id}")
     public ResponseEntity<Object> updateDepartment(@PathVariable Integer id, @RequestBody Department newDepartment) {
         return client.updateDepartment(id, newDepartment);
     }
 
-    //@GetMapping("rest/delete{id}")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @GetMapping("rest/department/delete/{id}")
     public Map<String, Boolean> deleteDepartment(@PathVariable Integer id) {
         return client.deleteDepartment(id);
     }

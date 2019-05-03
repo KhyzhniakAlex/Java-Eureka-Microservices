@@ -11,42 +11,37 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/rest/doctor")
+//@RequestMapping("/rest/doctor")
 public class DoctorController {
 
     private RestClient client;
 
     @Autowired
-    public void setDoctorController(RestClient client) {
+    public DoctorController(RestClient client) {
         this.client = client;
     }
 
-    //@GetMapping("rest/doctor-list")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("rest/doctor")
     public List<Doctor> getAllDoctors() {
         return client.getAllDoctors();
     }
 
-    //@GetMapping("rest/doctor{id}")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("rest/doctor/{id}")
     public Doctor getOneDoctor(@PathVariable Integer id) {
         return client.getOneDoctor(id);
     }
 
-    //@PostMapping("rest/doctor-create")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("rest/doctor")
     public ResponseEntity<Object> createDoctor(@Valid @RequestBody Doctor doctor) {
         return client.createDoctor(doctor);
     }
 
-    //@PutMapping("rest/doctor{id}")
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @PostMapping("rest/doctor/{id}")
     public ResponseEntity<Object> updateDoctor(@PathVariable Integer id, @RequestBody Doctor newDoctor) {
         return client.updateDoctor(id, newDoctor);
     }
 
-    //@DeleteMapping("rest/doctor{id}")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @GetMapping("rest/doctor/delete/{id}")
     public Map<String, Boolean> deleteDoctor(@PathVariable Integer id) {
         return client.deleteDoctor(id);
     }

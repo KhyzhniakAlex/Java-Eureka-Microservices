@@ -11,7 +11,7 @@ import java.util.Set;
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name", nullable = false)
@@ -47,9 +47,6 @@ public class Department {
 
 
 
-    public int getId() {
-        return id;
-    }
     public void setId(int id) {
         this.id = id;
     }

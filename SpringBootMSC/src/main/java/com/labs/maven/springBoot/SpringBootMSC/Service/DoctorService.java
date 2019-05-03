@@ -148,7 +148,7 @@ public class DoctorService implements ServiceInterface<Doctor> {
                     throw new ThereIsNoSuchItemException();
                 } else {
                     doc.setPresenceFlag(false);
-                    return doc;
+                    return repository.save(doc);
                 }
             });
         }
