@@ -54,52 +54,32 @@ public class Doctor {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getFname() {
         return fname;
     }
-
     public void setFname(String fname) {
         this.fname = fname;
     }
-
     public String getSurname() {
         return surname;
     }
-
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
     public Integer getAge() {
         return age;
     }
-
     public void setAge(Integer age) {
         this.age = age;
     }
-
     public Integer getSalary() {
         return salary;
     }
-
     public void setSalary(Integer salary) {
         this.salary = salary;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        Doctor doc = (Doctor)obj;
-        return id == doc.id &&
-                fname.equals(doc.fname) &&
-                surname.equals(doc.surname) &&
-                age.equals(doc.age) &&
-                salary.equals(doc.salary);
     }
 }
 

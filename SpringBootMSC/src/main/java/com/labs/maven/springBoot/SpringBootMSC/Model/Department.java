@@ -1,7 +1,6 @@
 package com.labs.maven.springBoot.SpringBootMSC.Model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,6 +18,7 @@ public class Department {
     @Column(name = "floor", nullable = false)
     private Integer floor;
 
+    @JsonIgnore
     @Column(name="presenceFlag", nullable = false)
     private boolean presenceFlag = true;
 
@@ -47,6 +47,7 @@ public class Department {
 
 
 
+    public int getId() { return id; }
     public void setId(int id) {
         this.id = id;
     }
@@ -67,14 +68,5 @@ public class Department {
     }
     public void setPresenceFlag(boolean flag) {
         this.presenceFlag = flag;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        Department dep = (Department)obj;
-        return id == dep.id &&
-                name.equals(dep.name) &&
-                floor.equals(dep.floor);
     }
 }

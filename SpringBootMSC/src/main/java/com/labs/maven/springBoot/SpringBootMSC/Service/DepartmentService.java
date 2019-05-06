@@ -10,8 +10,7 @@ import com.labs.maven.springBoot.SpringBootMSC.ServiceInterfaces.ServiceInterfac
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DepartmentService implements ServiceInterface<Department> {
@@ -44,17 +43,26 @@ public class DepartmentService implements ServiceInterface<Department> {
         return department;
     }
 
+
     @Override
     public List<Department> getAll() {
         List<Department> departments = (List<Department>)repository.findAll();
-        for(Department dep : departments) {
-            if (!dep.getPresenceFlag()) {
-                //for (Doctor doc : dep.getDoctors())
-                //    dep.getDoctors().remove(doc);
-                departments.remove(dep);
-            }
+        List<Department> newDepartments = new ArrayList<>();
+        for (Department dep : departments) {
+            repository.findById(dep.getId()).map(depat -> {
+                if (depat.getPresenceFlag()) {
+                    Set<Doctor> doctors = new HashSet<>();
+                    for (Doctor doc : depat.getDoctors()) {
+                        if (doc.getPresenceFlag())
+                            doctors.add(doc);
+                    }
+                    depat.setDoctors(doctors);
+                    newDepartments.add(depat);
+                }
+                return depat;
+            });
         }
-        return departments;
+        return newDepartments;
     }
 
     @Override
@@ -108,18 +116,6 @@ public class DepartmentService implements ServiceInterface<Department> {
         }
     }
 
-    /*@Override
-    public void deleteDepartment(Integer id) {
-        Optional<Department> dep = repository.findById(id);
-        if (!dep.isPresent()) {
-            ExceptionMessage em = new ExceptionMessage();
-            em.setGap(null);
-            throw new ThereIsNoSuchItemException();
-        }
-
-        repository.deleteById(id);
-    }*/
-
     @Override
     public void deleteObject(Integer id) {
         if (!repository.findById(id).isPresent()) {
@@ -134,6 +130,9 @@ public class DepartmentService implements ServiceInterface<Department> {
                     throw new ThereIsNoSuchItemException();
                 } else {
                     department.setPresenceFlag(false);
+                    for(Doctor doc : department.getDoctors()) {
+                        doc.setDepartment(null);
+                    }
                     return repository.save(department);
                 }
             });

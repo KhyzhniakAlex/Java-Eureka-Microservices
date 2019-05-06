@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient("a-bootiful-client")
+@FeignClient("lab")
 @RestController
 public interface RestClient {
 
