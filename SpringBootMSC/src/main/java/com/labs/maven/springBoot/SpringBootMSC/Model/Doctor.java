@@ -21,6 +21,7 @@ public class Doctor {
     @Column(name = "salary", nullable = false)
     private Integer salary;
 
+    @JsonIgnore
     @Column(name="presenceFlag", nullable = false)
     private boolean presenceFlag = true;
 
@@ -52,6 +53,7 @@ public class Doctor {
 
 
 
+    public int getId() { return id; }
     public void setId(int id) {
         this.id = id;
     }
@@ -87,13 +89,14 @@ public class Doctor {
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || this.getClass() != obj.getClass())
+            return false;
         Doctor doc = (Doctor)obj;
-        return id == doc.id &&
-                fname.equals(doc.fname) &&
-                surname.equals(doc.surname) &&
-                age.equals(doc.age) &&
-                salary.equals(doc.salary);
+        if (this.getSurname().equals(doc.getSurname()) && this.getFname().equals(doc.getFname()))
+            return false;
+        return (this.getSalary().equals(doc.getSalary()));
     }
 }

@@ -1,5 +1,6 @@
 package com.labs.maven.springBoot.SpringBootMSC.Service;
 
+import com.labs.maven.springBoot.SpringBootMSC.Model.Department;
 import com.labs.maven.springBoot.SpringBootMSC.Model.Doctor;
 import com.labs.maven.springBoot.SpringBootMSC.Model.ExceptionMessage;
 import com.labs.maven.springBoot.SpringBootMSC.Repositories.DoctorRepository;
@@ -9,6 +10,7 @@ import com.labs.maven.springBoot.SpringBootMSC.ServiceInterfaces.ServiceInterfac
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +31,7 @@ public class DoctorService implements ServiceInterface<Doctor> {
             ExceptionMessage em = new ExceptionMessage();
             em.setGap(null);
             throw new ThereIsNoSuchItemException();
-        }
-        else {
+        } else {
             doc.map(doctor -> {
                 if (!doctor.getPresenceFlag()) {
                     ExceptionMessage em = new ExceptionMessage();
@@ -46,11 +47,15 @@ public class DoctorService implements ServiceInterface<Doctor> {
     @Override
     public List<Doctor> getAll() {
         List<Doctor> doctors = (List<Doctor>)repository.findAll();
+        List<Doctor> newDoctors = new ArrayList<>();
         for (Doctor doc : doctors) {
-            if (!doc.getPresenceFlag())
-                doctors.remove(doc);
+            repository.findById(doc.getId()).map(doctor -> {
+                if (doctor.getPresenceFlag())
+                    newDoctors.add(doctor);
+                return doctor;
+            });
         }
-        return doctors;
+        return newDoctors;
     }
 
     @Override
@@ -73,8 +78,7 @@ public class DoctorService implements ServiceInterface<Doctor> {
         else if (doc.getSalary() == null) {
             em.setGap("Incorrect SALARY");
             throw new InvalidInfoException();
-        }
-        else{
+        } else{
             return repository.save(doc);
         }
     }
@@ -99,8 +103,7 @@ public class DoctorService implements ServiceInterface<Doctor> {
         else if (newDoc.getSalary() == null) {
             em.setGap("Incorrect SALARY");
             throw new InvalidInfoException();
-        }
-        else {
+        } else {
             return repository.findById(id)
                     .map(doc -> {
                         if (doc.getPresenceFlag()) {
@@ -109,8 +112,7 @@ public class DoctorService implements ServiceInterface<Doctor> {
                             doc.setAge(newDoc.getAge());
                             doc.setSalary(newDoc.getSalary());
                             return repository.save(doc);
-                        }
-                        else {
+                        } else {
                             newDoc.setId(id);
                             return repository.save(newDoc);
                         }
@@ -121,18 +123,6 @@ public class DoctorService implements ServiceInterface<Doctor> {
                     });
         }
     }
-
-    /*@Override
-    public void deleteDoctor(Integer id) {
-        Optional<Doctor> doc = repository.findById(id);
-        if (!doc.isPresent()) {
-            ExceptionMessage em = new ExceptionMessage();
-            em.setGap(null);
-            throw new ThereIsNoSuchItemException();
-        }
-
-        repository.deleteById(id);
-    }*/
 
     @Override
     public void deleteObject(Integer id) {
@@ -148,6 +138,15 @@ public class DoctorService implements ServiceInterface<Doctor> {
                     throw new ThereIsNoSuchItemException();
                 } else {
                     doc.setPresenceFlag(false);
+                    /*Department dep = doc.getDepartment();
+                    if (dep != null) {
+                        for (Doctor doctor : dep.getDoctors()) {
+                            repository.findById(doctor.getId()).map(doct -> {
+                                if (doct == doc) dep.getDoctors().remove(doct);
+                                return doct;
+                            });
+                        }
+                    }*/
                     return repository.save(doc);
                 }
             });

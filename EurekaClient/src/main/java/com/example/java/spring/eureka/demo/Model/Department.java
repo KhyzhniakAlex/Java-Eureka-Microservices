@@ -43,34 +43,20 @@ public class Department {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Integer getFloor() {
         return floor;
     }
-
     public void setFloor(Integer floor) {
         this.floor = floor;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        Department dep = (Department)obj;
-        return id == dep.id &&
-                name.equals(dep.name) &&
-                floor.equals(dep.floor);
     }
 }
 
